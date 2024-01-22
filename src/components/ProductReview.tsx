@@ -1,9 +1,10 @@
-import { useGetCommentQuery, usePostCommentMutation } from '@/redux/api/apiSlice';
+
 import { ChangeEvent, FormEvent, useState } from 'react';
 import { FiSend } from 'react-icons/fi';
 import { Avatar, AvatarFallback, AvatarImage } from './ui/avatar';
 import { Button } from './ui/button';
 import { Textarea } from './ui/textarea';
+import { useGetCommentQuery, usePostCommentMutation } from '@/redux/features/prodcut/productApi';
 
 const dummyComments = [
     'Bhalo na',
@@ -18,7 +19,10 @@ interface IProps {
 
 export default function ProductReview({ id }: IProps) {
     const [inputValue, setInputValue] = useState<string>('');
-    const { data } = useGetCommentQuery(id);
+    const { data } = useGetCommentQuery(id, {
+        refetchOnMountOrArgChange: true,
+        pollingInterval: 30000,
+    });
 
     console.log(data)
 
